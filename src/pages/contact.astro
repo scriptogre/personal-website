@@ -1,7 +1,7 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "@layouts/Layout.astro";
-import ContactForm from "./contact/_Form.svelte";
+import ContactForm from "@components/ContactForm.astro";
 
 let links = await getCollection('links');
 let contacts = links.filter(link => link.data.type === 'contact');
@@ -10,7 +10,7 @@ let socials = links.filter(link => link.data.type === 'social');
 
 <Layout title="Contact | Christian Tanul" description="Contact me for any inquiries, questions, or just to say hi!">
   <section class="my-12 sm:my-24 lg:my-36 flex flex-col items-center size-full justify-center">
-    <ContactForm client:load />
+    <ContactForm />
 
     <div class="flex gap-2 sm:gap-3 mt-6 sm:mt-9">
       {contacts.map(contact =>

@@ -1,0 +1,56 @@
+---
+import sendGrid from "@sendgrid/mail";
+
+export const prerender = false;
+
+// Only handle POST requests
+if (Astro.request.method !== "POST") {
+  return new Response("Method not allowed", { status: 405 });
+}
+
+// @ts-ignore
+sendGrid.setApiKey(import.meta.env.SENDGRID_API_KEY);
+
+// Parse form data
+const formData = await Astro.request.formData();
+const name = formData.get("name") as string;
+const email = formData.get("email") as string;
+const message = formData.get("message") as string;
+
+let isSuccess = false;
+let errorMessage = "";
+
+// Validate the data
+if (!name || !email || !message) {
+  errorMessage = "Missing required fields";
+} else {
+  const emailMessage = `
+    Name: ${name}
+    Email: ${email}
+    Message: ${message}
+  `;
+
+  const msg = {
+    to: "tanulchristian@gmail.com",
+    from: `Tanul Christian Personal Site <contact@pyoneers.dev>`,
+    replyTo: email,
+    subject: `${name} contacted you from tanulchristian.dev`,
+    text: emailMessage,
+  };
+
+  try {
+    await sendGrid.send(msg);
+    console.log("Email sent");
+    isSuccess = true;
+  } catch (error) {
+    console.error("Email sending error:", error.response?.body);
+    errorMessage = "Something went wrong, please try again.";
+  }
+}
+---
+
+{isSuccess ? (
+  <p class="mb-6 font-[500] text-red-800 dark:text-amber-500">Message sent successfully!</p>
+) : (
+  <p class="mb-6 font-[500] text-red-800 dark:text-red-500">{errorMessage}</p>
+)}
