@@ -29,10 +29,10 @@ const hasTOC = headings && headings.filter(h => h.depth >= 2 && h.depth <= 4).le
     <meta property="article:author" content="Christian Tanul" />
   </Fragment>
 
-  <div class="flex justify-center mt-4 sm:mt-8 lg:mt-16 lg:ps-80">
+  <div class="flex justify-center mt-8 sm:mt-12 lg:mt-20 lg:ps-80">
 
     <!-- Blog Content -->
-    <article class="max-w-2xl w-full">
+    <article class="max-w-3xl w-full">
 
       <!-- Blog Title -->
       <h1 class="text-3xl sm:text-4xl font-semibold dark:text-neutral-200">
@@ -50,17 +50,17 @@ const hasTOC = headings && headings.filter(h => h.depth >= 2 && h.depth <= 4).le
       </p>
 
       <!-- Divider -->
-      <div class="my-8 sm:my-8 h-[1px] w-full bg-neutral-200 dark:bg-neutral-800" />
+      <div class="my-10 sm:my-12 h-px w-full bg-neutral-150/70 dark:bg-neutral-850/70" />
 
       <!-- Blog Content -->
-      <div class="max-w-full mx-auto prose prose-neutral dark:prose-invert dark:prose-p:text-neutral-300 prose-img:rounded-xl prose-headings:relative prose-headings:-mt-20 prose-headings:pt-20 prose-headings:-z-10 prose-pre:max-w-sm  prose-code:text-xs prose-code:sm:text-sm prose-pre:sm:max-w-none prose-pre:overflow-x-auto prose-hr:bg-neutral-200 prose-hr:dark:bg-neutral-800">
+      <div class="max-w-full mx-auto prose prose-lg prose-neutral dark:prose-invert dark:prose-p:text-neutral-300 prose-headings:relative prose-headings:-mt-20 prose-headings:pt-20 prose-headings:-z-10 prose-pre:max-w-sm prose-pre:sm:max-w-none prose-pre:overflow-x-auto">
         <BlogContent slot="content" />
       </div>
     </article>
 
     <!-- Desktop Table of Contents (Right Side) -->
     {hasTOC && (
-      <aside class="hidden xl:block sticky top-24 self-start ml-12 shrink-0">
+      <aside class="hidden xl:block sticky top-24 self-start ml-16 shrink-0">
         <TableOfContents {headings} />
       </aside>
     )}

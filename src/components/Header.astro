@@ -40,12 +40,7 @@ const links = allLinks.filter(link => ['github', 'x'].includes(link.id));
     <!-- Logo -->
     <a href="/"
        aria-current={isHome ? 'page' : undefined}
-       class:list={[
-         "h-10 inline-flex items-center tracking-wider text-sm sm:text-base font-medium px-4 rounded-lg interact:bg-neutral-150 dark:interact:bg-neutral-800 outline-hidden",
-         isHome
-           ? "text-neutral-900 dark:text-neutral-100"
-           : "text-neutral-500 dark:text-neutral-400 interact:text-neutral-900 dark:interact:text-neutral-100"
-       ]}>
+       class="h-10 inline-flex items-center tracking-wider text-sm sm:text-base font-medium px-4 rounded-lg text-neutral-900 dark:text-neutral-100 interact:bg-neutral-150 dark:interact:bg-neutral-800 outline-hidden">
       ~/christiantanul.com
     </a>
 

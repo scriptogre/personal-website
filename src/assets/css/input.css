@@ -35,6 +35,13 @@
     --color-neutral-930: oklch(16.9% 0 0);
     --color-neutral-940: oklch(15.7% 0 0);
     --color-neutral-950: oklch(14.5% 0 0);
+
+    --radius-xs: 0.25rem;
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    --radius-2xl: 1.5rem;
 }
 
 
@@ -65,7 +72,34 @@
 @layer base {
     :root {
         --header-height: 3.5rem;
+        --astro-code-foreground: var(--color-neutral-800);
+        --astro-code-background: var(--color-neutral-25);
+        --astro-code-token-string-expression: #9a7b2f;
+        --astro-code-token-function: var(--color-neutral-600);
+        --astro-code-token-keyword: #397a47;
+        --astro-code-token-string: #397a47;
+        --astro-code-token-constant: #a85f3b;
+        --astro-code-token-parameter: #3379b7;
+        --astro-code-token-punctuation: #995694;
+        --astro-code-token-comment: var(--color-neutral-500);
+        --astro-code-token-link: #3379b7;
         color-scheme: light dark;
+    }
+
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --astro-code-foreground: var(--color-neutral-300);
+            --astro-code-background: var(--color-neutral-940);
+            --astro-code-token-string-expression: #d2ba78;
+            --astro-code-token-function: var(--color-neutral-350);
+            --astro-code-token-keyword: #79bd84;
+            --astro-code-token-string: #79bd84;
+            --astro-code-token-constant: #d79672;
+            --astro-code-token-parameter: #75b7ef;
+            --astro-code-token-punctuation: #d094ca;
+            --astro-code-token-comment: var(--color-neutral-500);
+            --astro-code-token-link: #75b7ef;
+        }
     }
 
     /* Prevent horizontal overflow */
@@ -101,6 +135,11 @@
     }
 }
 
+.prose pre,
+.prose :where(pre):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+    padding: 0;
+}
+
 /* Prose overrides */
 .prose {
     /* Use Barlow for body text */
@@ -111,6 +150,25 @@
 
     /* Heading anchor links should inherit text color */
     @apply prose-a:[[href^="#"]]:text-inherit;
+
+    @apply prose-img:rounded-2xl prose-hr:border-neutral-150 dark:prose-hr:border-neutral-850;
+
+    :where(:not(pre) > code):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+        @apply rounded-md bg-neutral-150/60 dark:bg-neutral-850/70 px-1.5 py-0.5 font-semibold text-neutral-800 dark:text-neutral-200;
+
+        &::before,
+        &::after {
+            content: none;
+        }
+    }
+
+    :where(pre):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+        @apply my-8 overflow-hidden rounded-xl border border-neutral-150 bg-(--astro-code-background) shadow-xs dark:border-neutral-850;
+
+        code {
+            @apply block overflow-x-auto p-5 sm:p-6 text-sm leading-6;
+        }
+    }
 
     /* Headings use Geist */
     :where(h1, h2, h3, h4, h5, h6):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
