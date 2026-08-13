@@ -1,5 +1,17 @@
 ---
 import Layout from "@layouts/Layout.astro";
+import { Image } from "astro:assets";
+import pythonWork from "@assets/images/python-work.webp";
+import oldTimesheet from "@assets/images/old_timesheet.webp";
+import facialRecognition from "@assets/images/facial-recognition.webp";
+import autogptContribution from "@assets/images/autogpt-contribution.webp";
+import whisperTodoistProject from "@assets/images/whisper-todoist-project.webp";
+import telegramBot from "@assets/images/telegram_bot.webp";
+import courseChatbot from "@assets/images/course-chatbot.webp";
+import lessons from "@assets/images/lessons.webp";
+import intreabaLegea from "../content/projects/intreabalegea.webp";
+import altm from "../content/projects/altm.webp";
+import nataliaGramada from "../content/projects/nataliagramada.webp";
 ---
 
 <Layout
@@ -7,7 +19,7 @@ import Layout from "@layouts/Layout.astro";
   description="Learn more about Christian Tanul, a full-stack developer and designer based in Timisoara, Romania.">
   <section id="about">
     <div
-      class="mx-auto prose prose-a:text-neutral-800 prose-img:rounded-3xl prose-img:mb-0 prose-img:mt-4 prose-p:mb-0 prose-p:text-neutral-800/90 mt-20 flex max-w-xl flex-col items-center justify-center lg:mt-40 lg:items-start lg:text-start">
+      class="mx-auto prose prose-a:text-neutral-800 dark:prose-a:text-neutral-200 prose-img:rounded-3xl prose-img:mb-0 prose-img:mt-4 prose-p:mb-0 prose-p:text-neutral-800/90 dark:prose-p:text-neutral-300 dark:prose-invert mt-20 flex max-w-xl flex-col items-center justify-center lg:mt-40 lg:items-start lg:text-start">
       <h1 class="mb-0 text-4xl font-semibold">About</h1>
 
       <p>
@@ -33,7 +45,7 @@ import Layout from "@layouts/Layout.astro";
       > quickly became my favourite activity.
       </p>
 
-      <img src="/python-work.webp" alt="Python work" />
+      <Image src={pythonWork} alt="Python work" widths={[480, 960, 1180]} sizes="(max-width: 640px) calc(100vw - 2rem), 576px" quality={80} />
 
       <h2>Early Career</h2>
 
@@ -41,13 +53,13 @@ import Layout from "@layouts/Layout.astro";
         At 16, I was hired by CRO OperaCRO. There, I built a handful of web applications. They automated previously manual administrative tasks such as approvals, timesheets, etc.
       </p>
 
-      <img src="/old_app.webp" alt="Old Timesheet App" />
+      <Image src={oldTimesheet} alt="Old Timesheet App" widths={[480, 960, 1180]} sizes="(max-width: 640px) calc(100vw - 2rem), 576px" quality={80} />
 
       <p>
         I also automated the censoring of (at least) 10000 clinical photos using Python & an existing facial landmark detection model.
       </p>
 
-      <img src="/facial_recognition.jpg" alt="Facial recognition" />
+      <Image src={facialRecognition} alt="Facial recognition" widths={[480, 960, 1180]} sizes="(max-width: 640px) calc(100vw - 2rem), 576px" quality={80} />
 
       <p>
         Working there, I better understood the value I can bring with my ability to write code. I saved the company several thousands of hours of work in my 4 years there.
@@ -79,7 +91,7 @@ import Layout from "@layouts/Layout.astro";
         repository</a>, one of the very first attempts to let a GPT run autonomously through Tree of Thoughts & agents.
       </p>
 
-      <img src="/autogpt_contribution.webp" alt="AutoGPT contribution" />
+      <Image src={autogptContribution} alt="AutoGPT contribution" widths={[480, 960, 1180]} sizes="(max-width: 640px) calc(100vw - 2rem), 576px" quality={80} />
 
       <p>
         I quickly saw both the limitations and potential of this tech. With countless ways to combine LLMs to boost
@@ -91,7 +103,7 @@ import Layout from "@layouts/Layout.astro";
         to parse that text into actionable tasks inserted directly into my to-do list app.
       </p>
 
-      <img src="/whisper_todoist_project.png" alt="Whisper to Todoist project" />
+      <Image src={whisperTodoistProject} alt="Whisper to Todoist project" widths={[480, 960, 1180]} sizes="(max-width: 640px) calc(100vw - 2rem), 576px" quality={80} />
 
       <p>
         It's pretty wild how 2-hour boring drives turned into productive planning sessions without having to lift a
@@ -104,7 +116,7 @@ import Layout from "@layouts/Layout.astro";
         were that person.
       </p>
 
-      <img src="/telegram_bot.webp" alt="Telegram bot" />
+      <Image src={telegramBot} alt="Telegram bot" widths={[480, 960, 1180]} sizes="(max-width: 640px) calc(100vw - 2rem), 576px" quality={80} />
 
       <p>
         It was a fun little project, mainly to keep my girlfriend entertained.
@@ -127,7 +139,7 @@ import Layout from "@layouts/Layout.astro";
         I integrated it into my platform as a mascot for the course.
       </p>
 
-      <img src="/pyoneers_gpt.png" alt="Pyoneers GPT" />
+      <Image src={courseChatbot} alt="Pyoneers GPT" widths={[480, 960, 1180]} sizes="(max-width: 640px) calc(100vw - 2rem), 576px" quality={80} />
 
       <h2>Current</h2>
 
@@ -140,25 +152,25 @@ import Layout from "@layouts/Layout.astro";
         the law (openly looking for a co-founder & investors).
       </p>
 
-      <img src="/intreabalegea.webp" alt="Intreabă Legea" />
+      <Image src={intreabaLegea} alt="Intreabă Legea" widths={[480, 960, 1180]} sizes="(max-width: 640px) calc(100vw - 2rem), 576px" quality={80} />
 
       <p>
-        My <a href="https://lessons.tanulchristian.dev">in-person lessons</a>, where I teach web development in my
+        My <a href="https://lessons.christiantanul.com">in-person lessons</a>, where I teach web development in my
         city.
       </p>
 
-      <img src="/lessons.webp" alt="In-person lessons" />
+      <Image src={lessons} alt="In-person lessons" widths={[480, 960, 1180]} sizes="(max-width: 640px) calc(100vw - 2rem), 576px" quality={80} />
 
       <p>
         And freelance projects as a contractor, where I help companies build web applications or websites.
       </p>
 
       <a href="https://altm.ro" target="_blank">
-        <img src="/altm.webp" alt="Active Learning Timisoara Spanish Courses" />
+        <Image src={altm} alt="Active Learning Timisoara Spanish Courses" widths={[480, 960, 1180]} sizes="(max-width: 640px) calc(100vw - 2rem), 576px" quality={80} />
       </a>
 
       <a href="https://nataliagramada.com" target="_blank">
-        <img src="/nataliagramada.webp" alt="Natalia Gramada" />
+        <Image src={nataliaGramada} alt="Natalia Gramada" widths={[480, 960, 1180]} sizes="(max-width: 640px) calc(100vw - 2rem), 576px" quality={80} />
       </a>
 
       <h2>Motivation</h2>

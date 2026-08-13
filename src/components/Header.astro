@@ -1,0 +1,72 @@
+---
+import { getCollection } from "astro:content";
+import Announcement from "./Announcement.astro";
+
+const { class: classList, sidebarOpenByDefault = false } = Astro.props;
+const currentPath = Astro.url.pathname;
+const isHome = currentPath === '/' || currentPath === '';
+
+const allLinks = await getCollection('links');
+const links = allLinks.filter(link => ['github', 'x'].includes(link.id));
+---
+
+<nav class:list={[classList, "flex items-center justify-between w-full h-(--header-height) shadow-xs border-b border-neutral-200 dark:border-neutral-850 bg-neutral-50 dark:bg-neutral-920 px-4"]}>
+
+  <!-- Left Side -->
+  <div class="flex items-center">
+
+    <!-- Mobile Sidebar Toggle -->
+    <label tabindex="0"
+           class="lg:hidden size-10 inline-grid place-content-center *:col-start-1 *:row-start-1 rounded-lg cursor-pointer select-none interact:text-neutral-900 dark:interact:text-neutral-50 interact:bg-neutral-150 dark:interact:bg-neutral-800 outline-hidden duration-200"
+           _="on keydown[key is 'Enter' or key is ' '] click() me">
+      <input id="sidebar-toggle-mobile" type="checkbox" class="hidden peer"
+             _="on click if my.checked add @checked to me else remove @checked from me" />
+      <iconify-icon icon="gg:menu" class="size-5 peer-checked:invisible peer-checked:opacity-0 transition-[opacity,transform] duration-200 rotate-180 peer-checked:rotate-90" height="none" />
+      <iconify-icon icon="gg:close" class="size-5 invisible opacity-0 peer-checked:visible peer-checked:opacity-100 transition-[opacity,transform] duration-200 peer-checked:-rotate-90" height="none" />
+    </label>
+
+    <!-- Desktop Sidebar Toggle -->
+    <label tabindex="0"
+           class="sidebar-toggle-desktop hidden lg:inline-grid size-10 place-content-center *:col-start-1 *:row-start-1 rounded-lg cursor-pointer select-none interact:text-neutral-900 dark:interact:text-neutral-50 interact:bg-neutral-150 dark:interact:bg-neutral-800 outline-hidden duration-200"
+           _="on keydown[key is 'Enter' or key is ' '] click() me">
+      <input type="checkbox" class="hidden peer" checked={sidebarOpenByDefault} />
+      <iconify-icon icon="gg:menu" class="size-5 peer-checked:invisible peer-checked:opacity-0 transition-[opacity,transform] duration-200 rotate-180 peer-checked:rotate-90" height="none" />
+      <iconify-icon icon="gg:close" class="size-5 invisible opacity-0 peer-checked:visible peer-checked:opacity-100 transition-[opacity,transform] duration-200 peer-checked:-rotate-90" height="none" />
+    </label>
+
+    <!-- Slot for additional controls (e.g. TOC toggle) -->
+    <slot name="before-logo" />
+
+    <!-- Logo -->
+    <a href="/"
+       aria-current={isHome ? 'page' : undefined}
+       class:list={[
+         "h-10 inline-flex items-center tracking-wider text-sm sm:text-base font-medium px-4 rounded-lg interact:bg-neutral-150 dark:interact:bg-neutral-800 outline-hidden",
+         isHome
+           ? "text-neutral-900 dark:text-neutral-100"
+           : "text-neutral-500 dark:text-neutral-400 interact:text-neutral-900 dark:interact:text-neutral-100"
+       ]}>
+      ~/christiantanul.com
+    </a>
+
+    <Announcement class="hidden lg:flex ms-2" />
+
+  </div>
+
+
+  <!-- Right Side -->
+  <div class="flex items-center">
+
+    {links.map((link) => (
+      <a href={link.data.href}
+         title={link.data.value}
+         aria-label={link.data.label}
+         target={link.data.href.startsWith('http') ? '_blank' : undefined}
+         rel={link.data.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+         class="size-10 inline-grid place-items-center rounded-lg text-neutral-600 dark:text-neutral-400 interact:text-neutral-800 dark:interact:text-neutral-200 interact:bg-neutral-150 dark:interact:bg-neutral-800 outline-hidden">
+        <iconify-icon icon={link.data.icon} class="size-5" height="none" />
+      </a>
+    ))}
+
+  </div>
+</nav>

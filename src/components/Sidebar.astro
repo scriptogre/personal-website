@@ -1,0 +1,70 @@
+---
+import { getCollection } from "astro:content";
+
+const blogs = (await getCollection('blogs')).sort((a, b) =>
+  new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+);
+const currentPath = Astro.url.pathname;
+const isInBlogSection = currentPath.startsWith('/blogs');
+
+const { class: classList } = Astro.props;
+---
+<aside id="sidebar" class:list={[classList, "fixed top-(--header-height) left-0 bottom-0 z-20 w-72 lg:w-80"]}>
+  <nav
+    aria-label="Sidebar Navigation"
+    class="h-full overflow-y-auto bg-neutral-50 dark:bg-neutral-920 border-r border-neutral-200 dark:border-neutral-850 px-4 pb-10 transition-[opacity,transform]
+           opacity-0 pointer-events-none -translate-x-full
+           [html:has(#sidebar-toggle-mobile:checked)_&]:opacity-100 [html:has(#sidebar-toggle-mobile:checked)_&]:pointer-events-auto [html:has(#sidebar-toggle-mobile:checked)_&]:translate-x-0
+           lg:[html:has(.sidebar-toggle-desktop_input:checked)_&]:opacity-100 lg:[html:has(.sidebar-toggle-desktop_input:checked)_&]:pointer-events-auto lg:[html:has(.sidebar-toggle-desktop_input:checked)_&]:translate-x-0"
+  >
+    <div class="h-4 shrink-0"></div>
+
+    <!-- Blog section -->
+    <details class="group/section w-full" open>
+      <summary class="sticky top-0 z-40 py-2 rounded-md
+                      bg-neutral-50 dark:bg-neutral-920
+                      list-none select-none
+                      flex items-center justify-between gap-2
+                      [&::-webkit-details-marker]:hidden
+                      cursor-pointer
+                      interact:bg-neutral-100 dark:interact:bg-neutral-800
+                      px-2">
+        <div class="flex items-center gap-3 min-w-0">
+          <iconify-icon icon="mdi:text-box" class:list={["size-4 shrink-0", isInBlogSection ? "text-neutral-700 dark:text-neutral-300" : "text-neutral-400 dark:text-neutral-500"]} />
+          <h2 class:list={["text-sm truncate", isInBlogSection ? "font-semibold text-neutral-900 dark:text-neutral-100" : "font-medium text-neutral-500 dark:text-neutral-400"]}>Blog</h2>
+        </div>
+        <iconify-icon icon="mdi:chevron-down" class="size-4.5 transition-transform group-open/section:rotate-180 text-neutral-400 dark:text-neutral-500 shrink-0" />
+      </summary>
+
+      <div class="pl-2 pt-1 pb-4">
+        <ul class="space-y-0.5 border-l border-neutral-200 dark:border-neutral-800 ml-1.5 pl-2.5">
+          {blogs.map((blog) => {
+            const blogPath = `/blogs/${blog.id}`;
+            const isActive = currentPath === blogPath || currentPath === `${blogPath}/`;
+            return (
+              <li>
+                <a href={blogPath}
+                   aria-current={isActive ? 'page' : undefined}
+                                      class="flex items-center gap-2 px-3 py-2 text-sm rounded-md
+                          text-neutral-600 dark:text-neutral-400
+                          interact:bg-neutral-100 dark:interact:bg-neutral-850
+                          interact:text-neutral-800 dark:interact:text-neutral-200
+                          aria-[current=page]:bg-neutral-100 dark:aria-[current=page]:bg-neutral-850
+                          aria-[current=page]:text-neutral-900 dark:aria-[current=page]:text-neutral-100
+                          aria-[current=page]:font-medium">
+                  <span class="truncate">{blog.data.title}</span>
+                  {blog.data.isNew && (
+                    <span class="shrink-0 text-xs font-medium text-red-800 dark:text-amber-500 bg-red-800/10 dark:bg-amber-500/20 rounded-full px-2 py-0.5">
+                      New
+                    </span>
+                  )}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </details>
+
+  </nav>
+</aside>

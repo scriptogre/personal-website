@@ -1,10 +1,8 @@
 ---
-import {getCollection} from "astro:content";
-import { Image } from 'astro:assets';
+import {getCollection, render} from "astro:content";
 import moment from 'moment';
 
 import Layout from "@layouts/Layout.astro";
-import myImage from "@assets/images/me.webp";
 import { calculateReadingTime } from "../../utils.js";
 import TableOfContents from "@components/TableOfContents.astro";
 
@@ -13,14 +11,16 @@ export async function getStaticPaths() {
 
   return blogs.map(blog => {
     return {
-      params: { blog: blog.slug },
+      params: { blog: blog.id },
       props: { blog }
     }
   });
 }
 
 const { blog } = Astro.props;
-const { Content: BlogContent, headings } = await blog.render();
+const { Content: BlogContent, headings } = await render(blog);
+
+const hasTOC = headings && headings.filter(h => h.depth >= 2 && h.depth <= 4).length > 0;
 ---
 <Layout title={blog.data.title} description={blog.data.description} og_image={blog.data.image.src}>
   <Fragment slot="after-open-graph-meta">
@@ -29,30 +29,10 @@ const { Content: BlogContent, headings } = await blog.render();
     <meta property="article:author" content="Christian Tanul" />
   </Fragment>
 
-  <div class="flex items-start mt-4 sm:mt-8 lg:mt-16">
-
-    <!-- Desktop Left Side Menu -->
-    <div class="hidden lg:flex sticky top-24 flex-col pe-12">
-
-      <!-- Go Back Button -->
-      <a href="/" class="flex items-center justify-center gap-2 tracking-wider font-[500] py-3 px-4 rounded-lg hover:text-neutral-900 dark:hover:text-neutral-50 hover:bg-neutral-400/10 duration-200 mb-4">
-        <iconify-icon icon="bi:arrow-left" class="text-red-800 dark:text-amber-500" />
-        <span>Go Back</span>
-      </a>
-
-      <!-- Desktop Table of Contents -->
-      <TableOfContents {headings} />
-
-    </div>
+  <div class="flex justify-center mt-4 sm:mt-8 lg:mt-16 lg:ps-80">
 
     <!-- Blog Content -->
-    <article class="mx-auto max-w-2xl">
-
-      <!-- Go Back Button -->
-      <a href="/" class="inline-flex lg:hidden items-center justify-center gap-2 tracking-wider font-[500] py-3 px-4 rounded-lg hover:text-neutral-900 dark:hover:text-neutral-50 hover:bg-neutral-400/10 duration-200 mb-4">
-        <iconify-icon icon="bi:arrow-left" class="text-red-800 dark:text-amber-500" />
-        <span>Go Back</span>
-      </a>
+    <article class="max-w-2xl w-full">
 
       <!-- Blog Title -->
       <h1 class="text-3xl sm:text-4xl font-semibold dark:text-neutral-200">
@@ -64,39 +44,27 @@ const { Content: BlogContent, headings } = await blog.render();
         {blog.data.description}
       </h2>
 
-      <!-- Blog Author, Reading Time, and Date -->
-      <div class="flex items-center justify-between mt-4 sm:mt-8">
-        <div class="inline-flex items-center">
-          <Image src={myImage} alt="Christian Tanul" class="size-8 rounded-full sm:size-10 object-cover shadow" />
-          <div class="ms-3 sm:ms-4 flex flex-col font-[500]">
-            <span class="mb-0.5 sm:mb-1 text-sm sm:text-base">Christian Tanul</span>
-            <p class="text-sm sm:text-base text-red-800 dark:text-amber-500">
-              {calculateReadingTime(blog.body)} min read <span class="mx-1">•</span>
-              {moment(blog.data.pubDate).format("MMM DD, YYYY")}
-            </p>
-          </div>
-        </div>
-      </div>
+      <!-- Reading Time and Date -->
+      <p class="text-sm text-neutral-500 dark:text-neutral-400 mt-4 sm:mt-6">
+        {moment(blog.data.pubDate).format("MMM DD, YYYY")} <span class="mx-1">·</span> {calculateReadingTime(blog.body)} min read
+      </p>
 
       <!-- Divider -->
-      <div class="my-8 sm:my-8 h-[1px] w-full bg-neutral-800/10 dark:bg-neutral-400/5" />
+      <div class="my-8 sm:my-8 h-[1px] w-full bg-neutral-200 dark:bg-neutral-800" />
 
       <!-- Blog Content -->
-      <div class="max-w-full mx-auto prose prose-neutral dark:prose-invert dark:prose-p:text-neutral-300 prose-img:rounded-xl prose-headings:relative prose-headings:-mt-20 prose-headings:pt-20 prose-headings:-z-10 prose-pre:max-w-sm  prose-code:text-xs prose-code:sm:text-sm prose-pre:sm:max-w-none prose-pre:overflow-x-auto prose-hr:bg-neutral-800/10 prose-hr:dark:bg-neutral-400/5">
+      <div class="max-w-full mx-auto prose prose-neutral dark:prose-invert dark:prose-p:text-neutral-300 prose-img:rounded-xl prose-headings:relative prose-headings:-mt-20 prose-headings:pt-20 prose-headings:-z-10 prose-pre:max-w-sm  prose-code:text-xs prose-code:sm:text-sm prose-pre:sm:max-w-none prose-pre:overflow-x-auto prose-hr:bg-neutral-200 prose-hr:dark:bg-neutral-800">
         <BlogContent slot="content" />
       </div>
     </article>
 
+    <!-- Desktop Table of Contents (Right Side) -->
+    {hasTOC && (
+      <aside class="hidden xl:block sticky top-24 self-start ml-12 shrink-0">
+        <TableOfContents {headings} />
+      </aside>
+    )}
+
   </div>
-
-  <!-- Mobile Floating Toggle Button -->
-  <label class="lg:hidden peer/mobile-toc-label z-10 fixed cursor-pointer inline-grid place-items-center *:col-start-1 *:row-start-1 bottom-4 left-4 p-2 bg-neutral-50 dark:bg-dark-gradient-lighter bg-fixed border border-transparent dark:border-neutral-400/5 shadow-lg rounded-full">
-    <input type="checkbox" class="peer hidden" id="mobile-toc-toggle" />
-    <iconify-icon icon="carbon:table-of-contents" class="text-red-800 dark:text-amber-500 text-2xl peer-checked:invisible peer-checked:opacity-0 duration-200 rotate-180 peer-checked:rotate-90" />
-    <iconify-icon icon="material-symbols-light:close" class="text-red-800 dark:text-amber-500 text-3xl invisible opacity-0 peer-checked:visible peer-checked:opacity-100 duration-200 peer-checked:-rotate-90" />
-  </label>
-
-  <!-- Mobile Table of Contents -->
-  <TableOfContents class="lg:hidden fixed bottom-20 -left-full peer-has-[:checked]/mobile-toc-label:left-4 duration-200 max-h-[calc(100vh-10rem)]" {headings} />
 
 </Layout>

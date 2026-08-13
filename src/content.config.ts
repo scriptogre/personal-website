@@ -1,6 +1,9 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
+import { glob } from "astro/loaders";
+import { z } from "astro/zod";
 
 const projectsCollection = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/projects" }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
@@ -11,6 +14,7 @@ const projectsCollection = defineCollection({
 });
 
 const clientsCollection = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/clients" }),
   schema: ({ image }) =>
     z.object({
       href: z.string(),
@@ -19,6 +23,7 @@ const clientsCollection = defineCollection({
 });
 
 const linksCollection = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/links" }),
   schema: z.discriminatedUnion("type", [
     z.object({
       type: z.literal("contact"),
@@ -38,34 +43,24 @@ const linksCollection = defineCollection({
 });
 
 const blogsCollection = defineCollection({
-  type: 'content',
-  schema: ({ image }) => z.object({
-    title: z.string(),
-    description: z.string(),
-    image: image(),
-    imageAlt: z.string(),
-    pubDate: z
-      .string()
-      .or(z.date())
-      .transform((val) => new Date(val)),
-    isNew: z.boolean().default(false),
-  })
-})
-
-const announcementsCollection = defineCollection({
-  type: 'content',
-  schema: z.object({
-    href: z.string(),
-    text: z.string(),
-    pubDate: z.string().or(z.date()).transform((val) => new Date(val)),
-  })
-})
-
+  loader: glob({ pattern: "**/*.mdx", base: "./src/content/blogs" }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      image: image(),
+      imageAlt: z.string(),
+      pubDate: z
+        .string()
+        .or(z.date())
+        .transform((val) => new Date(val)),
+      isNew: z.boolean().default(false),
+    }),
+});
 
 export const collections = {
   projects: projectsCollection,
   clients: clientsCollection,
   links: linksCollection,
   blogs: blogsCollection,
-  announcements: announcementsCollection,
 };

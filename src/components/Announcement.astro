@@ -1,16 +1,19 @@
 ---
 import { getCollection } from 'astro:content';
 
-// Access the blogs content collection
-const blogs = await getCollection('blogs')
+const blogs = (await getCollection('blogs')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
 
-const latestBlog = blogs.at(-1)
+const latestBlog = blogs[0];
 
 const { class: classList } = Astro.props;
 ---
-<a href=`/blogs/${latestBlog.slug}` class:list={[classList, "ml-3 text-xs leading-5 font-medium text-red-800 dark:text-amber-500 bg-red-800/10 dark:bg-amber-500/20 rounded-full py-1 px-3 items-center hover:bg-red-800/20 dark:hover:bg-amber-500/40 duration-200"]}>
-  <strong class="font-semibold">
-    New Blog: {latestBlog.data.title}
-  </strong>
-  <iconify-icon icon="material-symbols:chevron-right" class="ml-2 translate-y-[1px]" />
-</a>
+{latestBlog && (
+  <a href={`/blogs/${latestBlog.id}`} class:list={[classList, "ml-3 text-xs leading-5 font-medium text-red-800 dark:text-amber-500 bg-red-800/10 dark:bg-amber-500/20 rounded-full py-1 px-3 items-center interact:bg-red-800/20 dark:interact:bg-amber-500/40 duration-200"]}>
+    <strong class="font-semibold">
+      New Blog: {latestBlog.data.title}
+    </strong>
+    <iconify-icon icon="material-symbols:chevron-right" class="ml-2 translate-y-[1px]" />
+  </a>
+)}

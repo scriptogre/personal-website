@@ -7,30 +7,25 @@ import Announcement from "@components/Announcement.astro";
 ---
 
 <Layout
-  title="Home"
+  title="Christian Tanul / @scriptogre"
   description="I'm a developer. Need something built?"
   keywords="web developer, front-end developer, full-stack developer, web designer, web development, web design, front-end development, full-stack development, web development services, web design services"
   og_image="/og-image.webp"
+  hideSidebar
 >
   <section id="hero" class:list={["my-12 sm:my-24 lg:my-36 h-full text-center lg:text-start relative flex flex-col items-center justify-between lg:flex-row-reverse gap-8 sm:gap-12"]}>
 
     <Announcement class="inline-flex lg:hidden" />
 
-    <Image src={myImage} alt="Christian Tanul Profile Picture" class="brightness-125 dark:brightness-100 rounded-[4.5rem] border border-neutral-600 object-cover transition-all size-[300px] lg:h-auto lg:w-[400px] lg:object-center shadow-lg"/>
+    <Image src={myImage} alt="Christian Tanul Profile Picture" class="brightness-125 dark:brightness-100 rounded-[4.5rem] border border-neutral-600 object-cover size-[300px] lg:h-auto lg:w-[400px] lg:object-center shadow-lg"/>
 
     <div>
-      <h1 class="font-semibold text-4xl sm:text-5xl lg:text-6xl text-neutral-800 dark:text-neutral-100 font-['Sora_Variable']">
+      <h1 class="font-semibold text-4xl sm:text-5xl lg:text-6xl text-neutral-800 dark:text-neutral-100">
         Hi, I'm Chris
       </h1>
       <p class="mt-4 sm:mt-6 text-xl sm:text-2xl lg:text-3xl">
         I'm a developer. Need something built?
       </p>
-      <div class="flex flex-col lg:items-start items-center justify-center w-full mt-6 sm:mt-8">
-
-        <a href="/contact" class="text-transparent after:content-['Contact_Me'] font-['Sora_Variable'] text-xl py-3 px-4 outline-none rounded-lg relative before:content-[''] before:size-full before:absolute before:left-2 before:top-2 before:bg-black before:rounded-lg before:inset-0 before:-z-20 after:inset-0 after:rounded-lg after:size-full after:absolute after:bg-gradient-to-br after:from-red-800 after:to-red-700 after:dark:from-amber-500 after:dark:to-orange-500 after:-z-10 after:inline-grid after:place-content-center after:text-white/95 dark:after:text-neutral-800 hover:after:-top-1 focus-visible:after:-top-1 active:after:top-2 active:after:left-2 after:duration-150 after:ease-in-out" tabindex="0">
-          Contact Me
-        </a>
-      </div>
 
     </div>
 

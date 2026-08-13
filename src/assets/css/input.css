@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+@plugin "@tailwindcss/typography";
+@plugin "@iconify/tailwind4";
+
+@theme {
+    /* Fonts */
+    --font-sans: 'Geist Variable', sans-serif;
+    --font-prose: 'Barlow', sans-serif;
+
+    /* Extended neutral palette (oklch for consistency) */
+    --color-neutral-10: oklch(99.8% 0 0);
+    --color-neutral-25: oklch(99.5% 0 0);
+    --color-neutral-50: oklch(98.5% 0 0);
+    --color-neutral-75: oklch(97.8% 0 0);
+    --color-neutral-100: oklch(97% 0 0);
+    --color-neutral-150: oklch(95.6% 0 0);
+    --color-neutral-200: oklch(92.2% 0 0);
+    --color-neutral-300: oklch(87% 0 0);
+    --color-neutral-350: oklch(80.9% 0 0);
+    --color-neutral-400: oklch(70.8% 0 0);
+    --color-neutral-450: oklch(62.9% 0 0);
+    --color-neutral-500: oklch(55.6% 0 0);
+    --color-neutral-550: oklch(49.7% 0 0);
+    --color-neutral-600: oklch(43.9% 0 0);
+    --color-neutral-650: oklch(40.5% 0 0);
+    --color-neutral-700: oklch(37.1% 0 0);
+    --color-neutral-750: oklch(32.0% 0 0);
+    --color-neutral-800: oklch(26.9% 0 0);
+    --color-neutral-850: oklch(23.7% 0 0);
+    --color-neutral-875: oklch(22.1% 0 0);
+    --color-neutral-900: oklch(20.5% 0 0);
+    --color-neutral-910: oklch(19.3% 0 0);
+    --color-neutral-920: oklch(18.1% 0 0);
+    --color-neutral-930: oklch(16.9% 0 0);
+    --color-neutral-940: oklch(15.7% 0 0);
+    --color-neutral-950: oklch(14.5% 0 0);
+}
+
+
+/* interact: variant - combines hover/focus-visible/active for interactive states
+   Hover scoped to (hover: hover) to prevent sticky touch behavior on mobile.
+   :active provides brief tap feedback on touch devices */
+@custom-variant interact {
+    @media (hover: hover) {
+        &:hover {
+            @slot;
+        }
+    }
+    &:focus-visible {
+        @slot;
+    }
+    &:active {
+        @slot;
+    }
+}
+
+/* dark: variant - follow the device theme */
+@custom-variant dark {
+    @media (prefers-color-scheme: dark) {
+        @slot;
+    }
+}
+
+@layer base {
+    :root {
+        --header-height: 3.5rem;
+        color-scheme: light dark;
+    }
+
+    /* Prevent horizontal overflow */
+    body {
+        overflow-x: hidden;
+    }
+
+    /* Touch action for interactive elements */
+    button,
+    a,
+    [role="button"] {
+        touch-action: manipulation;
+    }
+
+    /* Improve underlines in anchors */
+    a, a * {
+        text-decoration-thickness: 0.125em;
+        text-underline-offset: 0.25em;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Prose overrides */
+.prose {
+    /* Use Barlow for body text */
+    font-family: var(--font-prose);
+
+    /* Links: no underline by default, underline on interact */
+    @apply prose-a:no-underline prose-a:interact:underline;
+
+    /* Heading anchor links should inherit text color */
+    @apply prose-a:[[href^="#"]]:text-inherit;
+
+    /* Headings use Geist */
+    :where(h1, h2, h3, h4, h5, h6):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+        font-family: var(--font-sans);
+    }
+}

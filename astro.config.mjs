@@ -1,15 +1,36 @@
+// @ts-check
 import { defineConfig } from "astro/config";
-import tailwind from "@astrojs/tailwind";
-import node from "@astrojs/node";
 import mdx from "@astrojs/mdx";
+import tailwindcss from "@tailwindcss/vite";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind({
-    applyBaseStyles: false
-  }), mdx()],
-  output: "hybrid",
-  adapter: node({
-    mode: "standalone"
-  })
+  site: "https://christiantanul.com",
+
+  server: {
+    host: true,
+  },
+
+  vite: {
+    plugins: [tailwindcss()]
+  },
+
+  markdown: {
+    rehypePlugins: [
+      rehypeSlug,
+      [
+        rehypeAutolinkHeadings,
+        {
+          behavior: "wrap",
+          test: (node) => node.tagName !== "h1",
+        },
+      ],
+    ],
+  },
+
+  integrations: [mdx()],
+
+  trailingSlash: "never",
 });
