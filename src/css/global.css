@@ -38,9 +38,9 @@ body:has(#mobile-toc-toggle:checked) {
 
 @layer utilities {
     .bg-dark-gradient {
-        @apply bg-[linear-gradient(175deg,hsl(190,14.29%,8.24%)_50%,hsl(213,25.64%,15.29%)_100%)]
+        @apply bg-[#121718] bg-[linear-gradient(175deg,hsl(190,14.29%,8.24%)_50%,hsl(213,25.64%,15.29%)_100%)]
     }
     .bg-dark-gradient-lighter {
-        @apply bg-[linear-gradient(175deg,hsl(190,14.29%,10%)_50%,hsl(213,25.64%,17%)_100%)]
+        @apply bg-[#161c1d] bg-[linear-gradient(175deg,hsl(190,14.29%,10%)_50%,hsl(213,25.64%,17%)_100%)]
     }
 }
