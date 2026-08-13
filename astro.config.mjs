@@ -15,6 +15,6 @@ export default defineConfig({
       enabled: true
     },
     imageService: true,
-    imagesConfig: { sizes: [40, 80, 96, 192, 224, 300, 448, 480, 600, 640, 750, 828, 960, 1080, 1200], domains: [] }
+    imagesConfig: { sizes: [40, 80, 96, 192, 224, 300, 448, 480, 600, 640, 740, 750, 828, 960, 1080, 1180, 1200], domains: [] }
   })
 });

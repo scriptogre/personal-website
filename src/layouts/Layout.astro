@@ -25,7 +25,8 @@ const pageURL = new URL(Astro.url.pathname, 'https://tanulchristian.dev').href;
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, viewport-fit=cover" />
-  <meta name="theme-color" content="#fafafa" />
+  <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#121718" media="(prefers-color-scheme: dark)" />
   <meta name="generator" content={Astro.generator} />
 
   <!-- Title and description -->
@@ -44,30 +45,6 @@ const pageURL = new URL(Astro.url.pathname, 'https://tanulchristian.dev').href;
   <slot name="after-open-graph-meta">
     <meta property="og:type" content="website" />
   </slot>
-
-  <!-- Apply the saved theme before external scripts or first paint. -->
-  <script is:inline>
-    function setDarkMode(document, theme = null) {
-      theme = theme || localStorage.getItem('theme') || 'auto';
-      const isDark = theme === 'dark' || (
-        theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches
-      );
-
-      if (theme === 'auto') {
-        localStorage.removeItem('theme');
-        document.documentElement.classList.toggle('dark', isDark);
-      } else {
-        document.documentElement.classList.toggle('dark', isDark);
-        localStorage.setItem('theme', theme);
-      }
-
-      document.querySelector('meta[name="theme-color"]')
-        ?.setAttribute('content', isDark ? '#121718' : '#fafafa');
-    }
-
-    setDarkMode(document);
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => setDarkMode(document));
-  </script>
 
   <!-- Favicon (dark & light mode) -->
   <link rel="icon" href="/favicon.svg" />

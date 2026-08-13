@@ -1,6 +1,5 @@
 ---
 import { getCollection } from "astro:content";
-import ThemePickerMenu from "./ThemePickerMenu.astro";
 import Announcement from "./Announcement.astro";
 
 const { class: classList } = Astro.props;
@@ -43,23 +42,6 @@ let github = links.find(link => link.data.label === 'GitHub');
     <a href={github.data.href} title={github.data.value} target="_blank" class="inline-flex items-center p-3 rounded-lg text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 focus:text-neutral-800 dark:hover:text-neutral-200 dark:focus:text-neutral-200 hover:bg-neutral-400/10 focus:bg-neutral-400/10 focus:border-transparent outline-none outline-1 focus:outline-red-800/50 dark:focus:outline-amber-500/50 transition-colors duration-200">
       <span class:list={[github.data.icon, "size-5"]}></span>
     </a>
-
-    <!-- Divider -->
-    <div class="h-6 w-[1px] bg-neutral-800/10 dark:bg-neutral-400/10 mx-2"></div>
-
-    <!-- Theme Picker -->
-    <div class="relative group">
-      <!-- Theme Picker Menu Toggle -->
-      <button id="theme-picker-menu-toggle"
-              aria-label="Choose theme"
-              class="inline-grid place-items-center rounded-lg p-3 hover:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-50 hover:bg-neutral-400/10 outline-none focus-visible:outline-red-800 dark:focus-visible:outline-amber-500 transition-colors duration-200"
-              onmousedown="if (this === document.activeElement) { event.preventDefault(); this.blur(); }">
-        <span class="icon-[ri--sun-line] size-5 dark:hidden text-red-800 group-has-[input:checked[name='theme'][value='auto']]:text-neutral-400 dark:group-has-[input:checked[name='theme'][value='auto']]:text-neutral-500 transition-colors duration-200"></span>
-        <span class="icon-[ri--moon-clear-line] size-5 hidden dark:block text-amber-500 group-has-[input:checked[name='theme'][value='auto']]:text-neutral-400 dark:group-has-[input:checked[name='theme'][value='auto']]:text-neutral-500 transition-colors duration-200"></span>
-      </button>
-      <!-- Theme Picker Menu -->
-      <ThemePickerMenu />
-    </div>
 
   </div>
 </nav>

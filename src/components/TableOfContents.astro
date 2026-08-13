@@ -57,7 +57,7 @@ headings.forEach(heading => {
   stack.fill(undefined, depth + 1);
 });
 ---
-<div class:list={[classList, "bg-white dark:bg-neutral-900 min-w-72 max-w-80 w-full rounded-xl shadow-xl border border-neutral-300 dark:border-neutral-700 overflow-y-auto overscroll-contain touch-pan-y"]}>
+<div class:list={[classList, "flex flex-col bg-white dark:bg-neutral-900 min-w-72 max-w-80 w-full rounded-xl shadow-xl border border-neutral-300 dark:border-neutral-700 overflow-hidden"]}>
   <!-- TOC Header -->
   <span class="sticky z-10 top-0 bg-white pt-6 px-6 pb-3 dark:bg-neutral-900 w-full inline-flex items-center font-[500] text-xl border-b border-neutral-200 dark:border-neutral-800">
     <span class="icon-[carbon--table-of-contents] text-orange-800 dark:text-amber-500 translate-y-px me-4"></span>
@@ -65,7 +65,7 @@ headings.forEach(heading => {
   </span>
 
   <!-- TOC Body -->
-  <ul class="flex flex-col gap-2 h-min pt-3 px-6 pb-6">
+  <ul class="toc-scroll min-h-0 flex flex-1 flex-col gap-2 pt-3 px-6 pb-6 overflow-y-scroll overscroll-contain touch-pan-y">
     {result.map(item => {return <NestedMenuItem item={item} />})}
   </ul>
 </div>

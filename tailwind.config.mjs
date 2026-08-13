@@ -12,5 +12,4 @@ export default {
     require("@tailwindcss/typography"),
     addDynamicIconSelectors(),
   ],
-  darkMode: "selector",
 };
