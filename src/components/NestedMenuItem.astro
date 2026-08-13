@@ -1,62 +1,31 @@
 ---
-// This component displays a navigation item as either a direct link or a collapsible menu, depending on its properties.
-// It supports optional nested subitems using recursive rendering and adjusts its behavior based on the presence of `href`.
-
 const { item } = Astro.props;
+const hasChildren = item.children?.length > 0;
 ---
 
 <li>
-  {/* Check if item has a hyperlink reference */}
   {item.href ? (
     <>
-      {/* Link section with icon and label */}
       <a href={item.href} class="group flex items-center px-4 py-2 rounded-lg hover:bg-neutral-400/10 outline-none focus-visible:outline-red-800 dark:focus-visible:outline-amber-500 transition-colors duration-200">
-        {item.icon && <iconify-icon icon={item.icon.name} class:list={item.icon.classList} />}
+        {item.icon && <span class:list={[item.icon.name, item.icon.classList]}></span>}
         <span set:html={item.label}></span>
-
-        {item.isNew && (
-          <span class="scale-75 inline-grid place-items-center text-xs font-medium text-red-800 dark:text-amber-500 bg-red-800/10 dark:bg-amber-500/20 group-hover:bg-red-800/20  dark:group-hover:bg-amber-500/40 transition-colors duration-100 rounded-full px-2 py-1 ml-auto">
-            New
-          </span>
-        )}
+        {item.isNew && <span class="scale-75 text-xs font-medium text-red-800 dark:text-amber-500 bg-red-800/10 dark:bg-amber-500/20 group-hover:bg-red-800/20 dark:group-hover:bg-amber-500/40 transition-colors duration-100 rounded-full px-2 py-1 ml-auto">New</span>}
       </a>
-
-      {/* Conditional rendering for children items if present */}
-      {item.children && item.children.length > 0 && (
-        <ul class="flex flex-col *:text-sm ml-4 pl-2 mt-2 gap-2 relative before:absolute before:bottom-3 before:left-0 before:top-3 before:w-[1px] before:content-[''] before:bg-neutral-800/10 dark:before:bg-neutral-400/10">
-          {item.children.map(child => <Astro.self item={child} />)}
-        </ul>
-      )}
+      {hasChildren && <ul class="flex flex-col *:text-sm ml-4 pl-2 mt-2 gap-2 border-l border-neutral-800/10 dark:border-neutral-400/10">
+        {item.children.map(child => <Astro.self item={child} />)}
+      </ul>}
     </>
-  ) : (
+  ) : hasChildren && (
     <>
-      {/* Section for items without a hyperlink but with children, making it collapsible */}
-      {item.children && item.children.length > 0 && (
-        <>
-          <label onkeydown="if (event.key === 'Enter' || event.key === ' ') event.target.click()"
-                 tabindex="0"
-                 class="peer select-none cursor-pointer flex items-center w-full px-4 py-2 rounded-lg hover:bg-neutral-400/10 outline-none focus-visible:outline-red-800 dark:focus-visible:outline-amber-500 transition-colors duration-200">
-            {/* Icon if present */}
-            {item.icon && <iconify-icon icon={item.icon.name} class:list={item.icon.classList} />}
-
-            {/* Label as text or HTML */}
-            <span set:html={item.label}></span>
-
-            {/* Hidden checkbox maintaining open/closed state */}
-            <input type="checkbox" class="hidden peer" id={item.label} autocomplete="off" checked={item.open} />
-
-            {/* Icon for dropdown state change */}
-            <iconify-icon for={item.label} icon="bi:chevron-down" class="text-xs ml-auto rotate-0 peer-checked:rotate-180 transition-transform duration-200" />
-          </label>
-
-          <ul class="hidden peer-has-[:checked]:flex *:text-sm overflow-y-auto flex-col ml-4 pl-2 mt-2 gap-2 relative before:absolute before:bottom-4 before:left-0 before:top-4 before:w-[1px] before:content-[''] before:bg-neutral-800/10 dark:before:bg-neutral-400/10">
-            <li>
-              {/* Recursive rendering of children items */}
-              {item.children.map(child => <Astro.self item={child} />)}
-            </li>
-          </ul>
-        </>
-      )}
+      <label onkeydown="if (event.key === 'Enter' || event.key === ' ') event.target.click()" tabindex="0" class="peer select-none cursor-pointer flex items-center w-full px-4 py-2 rounded-lg hover:bg-neutral-400/10 outline-none focus-visible:outline-red-800 dark:focus-visible:outline-amber-500 transition-colors duration-200">
+        {item.icon && <span class:list={[item.icon.name, item.icon.classList]}></span>}
+        <span set:html={item.label}></span>
+        <input type="checkbox" class="hidden peer" id={item.label} autocomplete="off" checked={item.open} />
+        <span class="icon-[bi--chevron-down] text-xs ml-auto peer-checked:rotate-180 transition-transform duration-200"></span>
+      </label>
+      <ul class="hidden peer-has-[:checked]:flex *:text-sm overflow-y-auto flex-col ml-4 pl-2 mt-2 gap-2 border-l border-neutral-800/10 dark:border-neutral-400/10">
+        {item.children.map(child => <Astro.self item={child} />)}
+      </ul>
     </>
   )}
 </li>

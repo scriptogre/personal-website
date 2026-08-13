@@ -24,7 +24,6 @@
     const result = await response.json();
 
     if (response.ok) {
-      console.log("Form submitted successfully");
       isSuccess = true;
       // Reset the form fields
       name = "";

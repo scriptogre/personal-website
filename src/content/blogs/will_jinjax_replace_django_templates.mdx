@@ -50,7 +50,7 @@ I haven't.
 
 <p className={"text-2xl"}>**Why?**</p>
 
-<div style="max-width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/dQuXnEyFlMsrk0v0fG" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed rounded-lg"></iframe></div>
+<div style="max-width:100%;height:0;padding-bottom:56%;position:relative;"><iframe src="https://giphy.com/embed/dQuXnEyFlMsrk0v0fG" title="Animated reaction" loading="lazy" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed rounded-lg"></iframe></div>
 
 I'm a baboon that can't structure his templates properly.
 
@@ -63,13 +63,13 @@ The biggest culprit was...
 ### The `{% include %}` tag
 
 While zoomies from the JavaScript community can happily write:
-<Image src={reactZoomies} alt="React Zoomies" class="w-56" />
+<Image src={reactZoomies} alt="React Zoomies" widths={[224, 448]} sizes="224px" quality={80} class="w-56" />
 ```jsx
 <Calendar date="2015-06-19" {user} {events} {settings} />
 ```
 
 We need to write this, just for some simple composition:
-<Image src={djangonautCrying} alt="Djangonaut Crying" class="w-56" />
+<Image src={djangonautCrying} alt="Djangonaut Crying" widths={[224, 448]} sizes="224px" quality={80} class="w-56" />
 ```html
 {% include "my_app_name/partials/_calendar.html" with date="2015-06-19", user=user_instance, events=events_list, settings=settings_dict %}
 ```
@@ -97,7 +97,7 @@ It seemed promising, but PyCharm would go crazy due to it's syntax.
 
 I opened [an issue about it](https://github.com/mixxorz/slippers/issues/27), with an attempt to fix it.
 
-<Image src={slippersIssue} alt="Slippers issue" />
+<Image src={slippersIssue} alt="Slippers issue" widths={[480, 640]} sizes="(max-width: 672px) calc(100vw - 2rem), 672px" quality={80} />
 
 But I eventually gave up.
 
@@ -142,7 +142,7 @@ This was similar to [`django-render-block`](https://github.com/clokep/django-ren
 
 Once again, [IDE compatibility was an issue](https://github.com/carltongibson/django-template-partials/issues/12). However, a [PR](https://github.com/carltongibson/django-template-partials/pull/18) from ~~ChatGPT~~ yours truly, fixed it.
 
-<Image src={djangoTemplatePartialsPR} alt="Django Template Partials PR" />
+<Image src={djangoTemplatePartialsPR} alt="Django Template Partials PR" widths={[480, 640]} sizes="(max-width: 672px) calc(100vw - 2rem), 672px" quality={80} />
 
 Still... it wasn't perfect.
 
@@ -163,11 +163,11 @@ It uses JSX syntax. I loved JSX's method of handling composition. It was clean a
 </Calendar>
 ```
 
-If you can't beat them, join them, right? I wanted to join the zoomies. <Image src={reactZoomies} alt="React Zoomies" class="inline w-24" />
+If you can't beat them, join them, right? I wanted to join the zoomies. <Image src={reactZoomies} alt="React Zoomies" widths={[96, 192]} sizes="96px" quality={80} class="inline w-24" />
 
 Still, JavaScript was insanely painful to read as a Python developer. So then it hit me:
 
-<Image src={pythonVsJavascript} alt="Python has clean syntax, but JavaScript has clean templates" />
+<Image src={pythonVsJavascript} alt="Python has clean syntax, but JavaScript has clean templates" widths={[480, 640]} sizes="(max-width: 672px) calc(100vw - 2rem), 672px" quality={80} />
 
 Do you see where I'm getting at?
 
@@ -177,7 +177,7 @@ Do you see where I'm getting at?
 
 ### JinjaX
 
-<Image src={dteVsJinjaX} alt="Django templates vs JinjaX" />
+<Image src={dteVsJinjaX} alt="Django templates vs JinjaX" widths={[480, 960, 1200]} sizes="(max-width: 672px) calc(100vw - 2rem), 672px" quality={80} />
 
 That's how I arrived at [JinjaX](https://github.com/jpsca/jinjax).
 
@@ -208,8 +208,8 @@ Consider this big block inside my `index.html`:
     >
       <input name="is_debug_mode" type="checkbox" class="hidden" autocomplete="off" />
 
-      <iconify-icon icon="pixelarticons:debug-off" class="group-has-[:checked]:hidden"></iconify-icon>
-      <iconify-icon icon="pixelarticons:debug" class="hidden group-has-[:checked]:block"></iconify-icon>
+      <span class="icon-[pixelarticons--debug-off] group-has-[:checked]:hidden"></span>
+      <span class="icon-[pixelarticons--debug] hidden group-has-[:checked]:block"></span>
     </label>
 
     <!-- Dark Mode Toggle -->
@@ -221,8 +221,8 @@ Consider this big block inside my `index.html`:
     >
         <input name="is_dark_mode" type="checkbox" class="hidden" autocomplete="off" />
 
-        <iconify-icon icon="ri:moon-clear-line" class="hidden group-has-[:checked]:block"></iconify-icon>
-        <iconify-icon icon="ri:sun-line" class="group-has-[:checked]:hidden"></iconify-icon>
+        <span class="icon-[ri--moon-clear-line] hidden group-has-[:checked]:block"></span>
+        <span class="icon-[ri--sun-line] group-has-[:checked]:hidden"></span>
     </label>
 
     <!-- Full Screen Toggle -->
@@ -234,8 +234,8 @@ Consider this big block inside my `index.html`:
     >
         <input name="is_fullscreen" type="checkbox" class="hidden" autocomplete="off" />
 
-        <iconify-icon icon="majesticons:maximize" class="group-has-[:checked]:hidden"></iconify-icon>
-        <iconify-icon icon="majesticons:minimize" class="hidden group-has-[:checked]:block"></iconify-icon>
+        <span class="icon-[majesticons--maximize] group-has-[:checked]:hidden"></span>
+        <span class="icon-[majesticons--minimize] hidden group-has-[:checked]:block"></span>
     </label>
 
 </div>
@@ -275,7 +275,7 @@ Everything is a trade-off.
 Yes, I am. It's part of a [presentation](https://pretalx.evolutio.pt/djangocon-europe-2024/talk/ZGBQ9K/)
 I'll be holding at DjangoCon Europe 2024, where I give a LLM control over the UI.
 
-<Image src={functionalChatbotShowcase} alt="Functional Chatbot Showcase" />
+<Image src={functionalChatbotShowcase} alt="Functional Chatbot Showcase" widths={[480, 640]} sizes="(max-width: 672px) calc(100vw - 2rem), 672px" quality={80} />
 
 **TailwindCSS Classes**
 

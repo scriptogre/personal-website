@@ -12,6 +12,10 @@ html.dark {
     background-color: #121718;
 }
 
+html:has(#mobile-toc-toggle:checked) {
+    overflow: hidden;
+}
+
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;

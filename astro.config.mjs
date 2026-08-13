@@ -14,6 +14,7 @@ export default defineConfig({
     webAnalytics: {
       enabled: true
     },
-    imageService: true
+    imageService: true,
+    imagesConfig: { sizes: [40, 80, 96, 192, 224, 300, 448, 480, 600, 640, 750, 828, 960, 1080, 1200], domains: [] }
   })
 });

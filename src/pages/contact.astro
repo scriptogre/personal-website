@@ -15,13 +15,13 @@ let socials = links.filter(link => link.data.type === 'social');
     <div class="flex gap-2 sm:gap-3 mt-6 sm:mt-9">
       {contacts.map(contact =>
         <a href={contact.data.href} aria-label={contact.data.label} title={contact.data.value} target="_blank" class="inline-grid place-content-center p-2 rounded-lg outline-none outline-1 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-400/10 hover:text-neutral-800 focus:text-neutral-800 dark:hover:text-neutral-200 dark:focus:text-neutral-200 focus:bg-neutral-400/10 focus:border-transparent focus:outline-red-800/50 dark:focus:outline-amber-500/50 transition-colors duration-200">
-          <iconify-icon icon={contact.data.icon} class="text-lg" />
+          <span class:list={[contact.data.icon, "text-lg"]}></span>
         </a>
       )}
       <div class="w-[1px] border-r border-neutral-400/10"></div>
       {socials.map(contact =>
         <a href={contact.data.href} target="_blank" aria-label={contact.data.label} title={contact.data.value} class="inline-grid place-content-center p-2 rounded-lg outline-none outline-1 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-400/10 hover:text-neutral-800 focus:text-neutral-800 dark:hover:text-neutral-200 dark:focus:text-neutral-200 focus:bg-neutral-400/10 focus:border-transparent focus:outline-red-800/50 dark:focus:outline-amber-500/50 transition-colors duration-200">
-          <iconify-icon icon={contact.data.icon} class="text-lg" />
+          <span class:list={[contact.data.icon, "text-lg"]}></span>
         </a>
       )}
     </div>

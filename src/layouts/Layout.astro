@@ -12,12 +12,11 @@ import '@fontsource/barlow/400.css';
 import '@fontsource/barlow/500.css';
 import '@fontsource-variable/sora';
 
-import { ViewTransitions } from "astro:transitions";
-
 let links = await getCollection('links');
 let socials = links.filter((link) => link.data.type === 'social');
 
 const { title, description, keywords='', og_image='' } = Astro.props;
+const pageURL = new URL(Astro.url.pathname, 'https://tanulchristian.dev').href;
 ---
 
 <!doctype html>
@@ -32,12 +31,13 @@ const { title, description, keywords='', og_image='' } = Astro.props;
   <!-- Title and description -->
   <title>{title} | Christian Tanul</title>
   <meta name="description" content={description} />
+  <link rel="canonical" href={pageURL} />
 
   <!-- Open Graph -->
   <meta name="author" content="Christian Tanul" />
   <meta property="og:title" content={`${title} | Christian Tanul`} />
   <meta property="og:description" content={description} />
-  <meta property="og:url" content="https://tanulchristian.dev" />
+  <meta property="og:url" content={pageURL} />
   {og_image && <meta property="og:image" content={"https://tanulchristian.dev" + og_image} />}
   {keywords && <meta name="keywords" content={keywords} />}
 
@@ -66,18 +66,11 @@ const { title, description, keywords='', og_image='' } = Astro.props;
     }
 
     setDarkMode(document);
-    document.addEventListener('astro:before-swap', e => setDarkMode(e.newDocument));
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => setDarkMode(document));
   </script>
 
   <!-- Favicon (dark & light mode) -->
   <link rel="icon" href="/favicon.svg" />
-
-  <!-- Web Component - <icon-iconify/> -->
-  <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
-
-  <!-- Astro View Transitions -->
-  <ViewTransitions />
 
 </head>
 
@@ -103,7 +96,7 @@ const { title, description, keywords='', og_image='' } = Astro.props;
           class="inline-grid place-items-center p-2 text-neutral-600 hover:text-neutral-800 focus-visible:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-300 dark:focus-visible:text-neutral-300 transition-colors duration-200 outline-none outline-1 focus-visible:outline-red-800 dark:focus-visible:outline-amber-500 rounded-lg"
           target="_blank"
           aria-label={link.data.label}>
-          <iconify-icon icon={link.data.icon} />
+          <span class={link.data.icon}></span>
         </a>
       ))}
     </div>
@@ -114,12 +107,3 @@ const { title, description, keywords='', og_image='' } = Astro.props;
 
 </body>
 </html>
-
-<style is:global>
-    /* To avoid layout shift */
-    iconify-icon {
-        display: inline-block;
-        width: 1em;
-        height: 1em;
-    }
-</style>

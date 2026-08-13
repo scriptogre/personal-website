@@ -17,20 +17,14 @@ let github = links.find(link => link.data.label === 'GitHub');
 
     <!-- Side-nav Toggle -->
     <label onkeydown="if (event.key === 'Enter' || event.key === ' ') event.target.click()"
+           aria-label="Toggle navigation"
            tabindex="0"
            class="size-12 inline-grid place-content-center *:col-start-1 *:row-start-1 p-3 rounded-lg cursor-pointer hover:text-neutral-900 dark:hover:text-neutral-50 hover:bg-neutral-400/10 outline-none focus-visible:outline-red-800 dark:focus-visible:outline-amber-500 transition-colors duration-200">
       <!-- Input (maintains state) -->
       <input id="side-nav-toggle" type="checkbox" class="hidden peer" />
-      <script is:inline>
-        // Upon astro:onload, set the initial state of the input
-        document.addEventListener('astro:onload', () => {
-          const input = document.getElementById('side-nav-toggle');
-          input.checked = false;
-        });
-      </script>
       <!-- Icons -->
-      <iconify-icon icon="gg:menu" class="size-5 peer-checked:invisible peer-checked:opacity-0 transition-[transform,opacity,visibility] duration-200 rotate-180 peer-checked:rotate-90" height="unset" />
-      <iconify-icon icon="gg:close" class="size-5 invisible opacity-0 peer-checked:visible peer-checked:opacity-100 transition-[transform,opacity,visibility] duration-200 peer-checked:-rotate-90" height="unset" />
+      <span class="icon-[gg--menu] size-5 peer-checked:invisible peer-checked:opacity-0 transition-[transform,opacity,visibility] duration-200 rotate-180 peer-checked:rotate-90"></span>
+      <span class="icon-[gg--close] size-5 invisible opacity-0 peer-checked:visible peer-checked:opacity-100 transition-[transform,opacity,visibility] duration-200 peer-checked:-rotate-90"></span>
     </label>
 
     <!-- Logo -->
@@ -47,7 +41,7 @@ let github = links.find(link => link.data.label === 'GitHub');
   <div class="flex items-center">
 
     <a href={github.data.href} title={github.data.value} target="_blank" class="inline-flex items-center p-3 rounded-lg text-neutral-600 dark:text-neutral-400 hover:text-neutral-800 focus:text-neutral-800 dark:hover:text-neutral-200 dark:focus:text-neutral-200 hover:bg-neutral-400/10 focus:bg-neutral-400/10 focus:border-transparent outline-none outline-1 focus:outline-red-800/50 dark:focus:outline-amber-500/50 transition-colors duration-200">
-      <iconify-icon icon={github.data.icon} class="size-5" height="unset" />
+      <span class:list={[github.data.icon, "size-5"]}></span>
     </a>
 
     <!-- Divider -->
@@ -57,10 +51,11 @@ let github = links.find(link => link.data.label === 'GitHub');
     <div class="relative group">
       <!-- Theme Picker Menu Toggle -->
       <button id="theme-picker-menu-toggle"
+              aria-label="Choose theme"
               class="inline-grid place-items-center rounded-lg p-3 hover:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-50 hover:bg-neutral-400/10 outline-none focus-visible:outline-red-800 dark:focus-visible:outline-amber-500 transition-colors duration-200"
               onmousedown="if (this === document.activeElement) { event.preventDefault(); this.blur(); }">
-        <iconify-icon icon="ri:sun-line" class="size-5 dark:hidden text-red-800 group-has-[input:checked[name='theme'][value='auto']]:text-neutral-400 dark:group-has-[input:checked[name='theme'][value='auto']]:text-neutral-500 transition-colors duration-200" height="none" />
-        <iconify-icon icon="ri:moon-clear-line" class="size-5 hidden dark:block text-amber-500 group-has-[input:checked[name='theme'][value='auto']]:text-neutral-400 dark:group-has-[input:checked[name='theme'][value='auto']]:text-neutral-500 transition-colors duration-200" height="none"/>
+        <span class="icon-[ri--sun-line] size-5 dark:hidden text-red-800 group-has-[input:checked[name='theme'][value='auto']]:text-neutral-400 dark:group-has-[input:checked[name='theme'][value='auto']]:text-neutral-500 transition-colors duration-200"></span>
+        <span class="icon-[ri--moon-clear-line] size-5 hidden dark:block text-amber-500 group-has-[input:checked[name='theme'][value='auto']]:text-neutral-400 dark:group-has-[input:checked[name='theme'][value='auto']]:text-neutral-500 transition-colors duration-200"></span>
       </button>
       <!-- Theme Picker Menu -->
       <ThemePickerMenu />

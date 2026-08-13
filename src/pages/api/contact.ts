@@ -34,7 +34,6 @@ export async function POST({ request }) {
 
   try {
     await sendGrid.send(msg);
-    console.log("Email sent");
     return new Response(
       JSON.stringify({
         message: "Success!",

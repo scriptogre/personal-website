@@ -1,7 +1,6 @@
 ---
 import {getCollection} from "astro:content";
 import { Image } from 'astro:assets';
-import moment from 'moment';
 
 import Layout from "@layouts/Layout.astro";
 import myImage from "@assets/images/me.webp";
@@ -21,6 +20,7 @@ export async function getStaticPaths() {
 
 const { blog } = Astro.props;
 const { Content: BlogContent, headings } = await blog.render();
+const published = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(blog.data.pubDate);
 ---
 <Layout title={blog.data.title} description={blog.data.description} og_image={blog.data.image.src}>
   <Fragment slot="after-open-graph-meta">
@@ -36,7 +36,7 @@ const { Content: BlogContent, headings } = await blog.render();
 
       <!-- Go Back Button -->
       <a href="/" class="flex items-center justify-center gap-2 tracking-wider font-[500] py-3 px-4 rounded-lg hover:text-neutral-900 dark:hover:text-neutral-50 hover:bg-neutral-400/10 transition-colors duration-200 mb-4">
-        <iconify-icon icon="bi:arrow-left" class="text-red-800 dark:text-amber-500" />
+        <span class="icon-[bi--arrow-left] text-red-800 dark:text-amber-500"></span>
         <span>Go Back</span>
       </a>
 
@@ -50,7 +50,7 @@ const { Content: BlogContent, headings } = await blog.render();
 
       <!-- Go Back Button -->
       <a href="/" class="inline-flex lg:hidden items-center justify-center gap-2 tracking-wider font-[500] py-3 px-4 rounded-lg hover:text-neutral-900 dark:hover:text-neutral-50 hover:bg-neutral-400/10 transition-colors duration-200 mb-4">
-        <iconify-icon icon="bi:arrow-left" class="text-red-800 dark:text-amber-500" />
+        <span class="icon-[bi--arrow-left] text-red-800 dark:text-amber-500"></span>
         <span>Go Back</span>
       </a>
 
@@ -67,12 +67,12 @@ const { Content: BlogContent, headings } = await blog.render();
       <!-- Blog Author, Reading Time, and Date -->
       <div class="flex items-center justify-between mt-4 sm:mt-8">
         <div class="inline-flex items-center">
-          <Image src={myImage} alt="Christian Tanul" class="size-8 rounded-full sm:size-10 object-cover shadow" />
+          <Image src={myImage} alt="Christian Tanul" widths={[40, 80]} sizes="40px" quality={80} class="size-8 rounded-full sm:size-10 object-cover shadow" />
           <div class="ms-3 sm:ms-4 flex flex-col font-[500]">
             <span class="mb-0.5 sm:mb-1 text-sm sm:text-base">Christian Tanul</span>
             <p class="text-sm sm:text-base text-red-800 dark:text-amber-500">
               {calculateReadingTime(blog.body)} min read <span class="mx-1">•</span>
-              {moment(blog.data.pubDate).format("MMM DD, YYYY")}
+              {published}
             </p>
           </div>
         </div>
@@ -90,13 +90,13 @@ const { Content: BlogContent, headings } = await blog.render();
   </div>
 
   <!-- Mobile Floating Toggle Button -->
-  <label class="lg:hidden peer/mobile-toc-label z-10 fixed cursor-pointer inline-grid place-items-center *:col-start-1 *:row-start-1 bottom-4 left-4 p-2 bg-neutral-50 dark:bg-dark-gradient-lighter border border-transparent dark:border-neutral-400/5 shadow-lg rounded-full">
+  <label aria-label="Toggle table of contents" class="lg:hidden peer/mobile-toc-label z-10 fixed cursor-pointer inline-grid place-items-center *:col-start-1 *:row-start-1 bottom-4 left-4 p-2 bg-neutral-50 dark:bg-neutral-900 border border-neutral-300 dark:border-neutral-700 shadow-lg rounded-full">
     <input type="checkbox" class="peer hidden" id="mobile-toc-toggle" />
-    <iconify-icon icon="carbon:table-of-contents" class="text-red-800 dark:text-amber-500 text-2xl peer-checked:invisible peer-checked:opacity-0 transition-[transform,opacity,visibility] duration-200 rotate-180 peer-checked:rotate-90" />
-    <iconify-icon icon="material-symbols-light:close" class="text-red-800 dark:text-amber-500 text-3xl invisible opacity-0 peer-checked:visible peer-checked:opacity-100 transition-[transform,opacity,visibility] duration-200 peer-checked:-rotate-90" />
+    <span class="icon-[carbon--table-of-contents] text-red-800 dark:text-amber-500 text-2xl peer-checked:invisible peer-checked:opacity-0 transition-[transform,opacity,visibility] duration-200 rotate-180 peer-checked:rotate-90"></span>
+    <span class="icon-[material-symbols-light--close] text-red-800 dark:text-amber-500 text-3xl invisible opacity-0 peer-checked:visible peer-checked:opacity-100 transition-[transform,opacity,visibility] duration-200 peer-checked:-rotate-90"></span>
   </label>
 
   <!-- Mobile Table of Contents -->
-  <TableOfContents class="lg:hidden fixed bottom-20 left-0 -translate-x-full peer-has-[:checked]/mobile-toc-label:translate-x-4 transition-transform duration-200 max-h-[calc(100vh-10rem)]" {headings} />
+  <TableOfContents class="lg:hidden fixed bottom-20 left-0 -translate-x-full peer-has-[:checked]/mobile-toc-label:translate-x-4 transition-transform duration-200 max-h-[calc(100dvh-7rem)]" {headings} />
 
 </Layout>
