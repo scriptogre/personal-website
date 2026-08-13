@@ -35,7 +35,7 @@ const { Content: BlogContent, headings } = await blog.render();
     <div class="hidden lg:flex sticky top-24 flex-col pe-12">
 
       <!-- Go Back Button -->
-      <a href="/" class="flex items-center justify-center gap-2 tracking-wider font-[500] py-3 px-4 rounded-lg hover:text-neutral-900 dark:hover:text-neutral-50 hover:bg-neutral-400/10 duration-200 mb-4">
+      <a href="/" class="flex items-center justify-center gap-2 tracking-wider font-[500] py-3 px-4 rounded-lg hover:text-neutral-900 dark:hover:text-neutral-50 hover:bg-neutral-400/10 transition-colors duration-200 mb-4">
         <iconify-icon icon="bi:arrow-left" class="text-red-800 dark:text-amber-500" />
         <span>Go Back</span>
       </a>
@@ -49,7 +49,7 @@ const { Content: BlogContent, headings } = await blog.render();
     <article class="mx-auto max-w-2xl">
 
       <!-- Go Back Button -->
-      <a href="/" class="inline-flex lg:hidden items-center justify-center gap-2 tracking-wider font-[500] py-3 px-4 rounded-lg hover:text-neutral-900 dark:hover:text-neutral-50 hover:bg-neutral-400/10 duration-200 mb-4">
+      <a href="/" class="inline-flex lg:hidden items-center justify-center gap-2 tracking-wider font-[500] py-3 px-4 rounded-lg hover:text-neutral-900 dark:hover:text-neutral-50 hover:bg-neutral-400/10 transition-colors duration-200 mb-4">
         <iconify-icon icon="bi:arrow-left" class="text-red-800 dark:text-amber-500" />
         <span>Go Back</span>
       </a>
@@ -90,13 +90,13 @@ const { Content: BlogContent, headings } = await blog.render();
   </div>
 
   <!-- Mobile Floating Toggle Button -->
-  <label class="lg:hidden peer/mobile-toc-label z-10 fixed cursor-pointer inline-grid place-items-center *:col-start-1 *:row-start-1 bottom-4 left-4 p-2 bg-neutral-50 dark:bg-dark-gradient-lighter bg-fixed border border-transparent dark:border-neutral-400/5 shadow-lg rounded-full">
+  <label class="lg:hidden peer/mobile-toc-label z-10 fixed cursor-pointer inline-grid place-items-center *:col-start-1 *:row-start-1 bottom-4 left-4 p-2 bg-neutral-50 dark:bg-dark-gradient-lighter border border-transparent dark:border-neutral-400/5 shadow-lg rounded-full">
     <input type="checkbox" class="peer hidden" id="mobile-toc-toggle" />
-    <iconify-icon icon="carbon:table-of-contents" class="text-red-800 dark:text-amber-500 text-2xl peer-checked:invisible peer-checked:opacity-0 duration-200 rotate-180 peer-checked:rotate-90" />
-    <iconify-icon icon="material-symbols-light:close" class="text-red-800 dark:text-amber-500 text-3xl invisible opacity-0 peer-checked:visible peer-checked:opacity-100 duration-200 peer-checked:-rotate-90" />
+    <iconify-icon icon="carbon:table-of-contents" class="text-red-800 dark:text-amber-500 text-2xl peer-checked:invisible peer-checked:opacity-0 transition-[transform,opacity,visibility] duration-200 rotate-180 peer-checked:rotate-90" />
+    <iconify-icon icon="material-symbols-light:close" class="text-red-800 dark:text-amber-500 text-3xl invisible opacity-0 peer-checked:visible peer-checked:opacity-100 transition-[transform,opacity,visibility] duration-200 peer-checked:-rotate-90" />
   </label>
 
   <!-- Mobile Table of Contents -->
-  <TableOfContents class="lg:hidden fixed bottom-20 -left-full peer-has-[:checked]/mobile-toc-label:left-4 duration-200 max-h-[calc(100vh-10rem)]" {headings} />
+  <TableOfContents class="lg:hidden fixed bottom-20 left-0 -translate-x-full peer-has-[:checked]/mobile-toc-label:translate-x-4 transition-transform duration-200 max-h-[calc(100vh-10rem)]" {headings} />
 
 </Layout>

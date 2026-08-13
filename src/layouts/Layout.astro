@@ -83,17 +83,13 @@ const { title, description, keywords='', og_image='' } = Astro.props;
 
 <body class="flex flex-col justify-between min-h-screen relative font-['Barlow'] text-neutral-800 dark:text-neutral-300 bg-gradient-to-br from-neutral-50 to-neutral-100 dark:bg-dark-gradient">
 
-<!-- Backgrounds as separate elements (for transitions to work) -->
-<div id="dark-mode-background" class="-z-10 opacity-100 dark:opacity-0 transition-opacity duration-300 fixed h-screen w-screen bg-gradient-to-br from-neutral-50 to-neutral-100"></div>
-<div id="light-mode-background" class="-z-10 opacity-0 dark:opacity-100 transition-opacity duration-300 fixed h-screen w-screen bg-dark-gradient"></div>
-
 <!-- Navigation -->
 <TopNav class="sticky top-0 z-30" />
-<SideNav class="fixed top-0 -left-96 side-nav-open:left-0 z-20 duration-200 ease-out" />
-<label id="side-nav-backdrop" for="side-nav-toggle" class="fixed z-10 top-0 left-0 invisible opacity-0 side-nav-open:visible side-nav-open:opacity-100 transition-opacity bg-black/50 mt-[calc(4rem+1px)] w-screen h-screen cursor-pointer"></label>
+<SideNav class="fixed top-0 -translate-x-full side-nav-open:translate-x-0 z-20 transition-transform duration-200 ease-out" />
+<label id="side-nav-backdrop" for="side-nav-toggle" class="fixed z-10 top-0 left-0 invisible opacity-0 side-nav-open:visible side-nav-open:opacity-100 transition-[opacity,visibility] duration-200 bg-black/50 mt-[calc(4rem+1px)] w-screen h-screen cursor-pointer"></label>
 
 <!-- Main Content -->
-<main class="mx-auto w-full max-w-6xl px-4 sm:px-8 animate-fade">
+<main class="mx-auto w-full max-w-6xl px-4 sm:px-8">
   <slot />
 </main>
 
@@ -104,7 +100,7 @@ const { title, description, keywords='', og_image='' } = Astro.props;
       {socials.map((link) => (
         <a
           href={link.data.href}
-          class="inline-grid place-items-center p-2 text-neutral-600 hover:text-neutral-800 focus-visible:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-300 dark:focus-visible:text-neutral-300 duration-200 outline-none outline-1 focus-visible:outline-red-800 dark:focus-visible:outline-amber-500 rounded-lg"
+          class="inline-grid place-items-center p-2 text-neutral-600 hover:text-neutral-800 focus-visible:text-neutral-800 dark:text-neutral-400 dark:hover:text-neutral-300 dark:focus-visible:text-neutral-300 transition-colors duration-200 outline-none outline-1 focus-visible:outline-red-800 dark:focus-visible:outline-amber-500 rounded-lg"
           target="_blank"
           aria-label={link.data.label}>
           <iconify-icon icon={link.data.icon} />
