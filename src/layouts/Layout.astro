@@ -25,7 +25,8 @@ const { title, description, keywords='', og_image='' } = Astro.props;
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width" />
+  <meta name="viewport" content="width=device-width, viewport-fit=cover" />
+  <meta name="theme-color" content="#fafafa" />
   <meta name="generator" content={Astro.generator} />
 
   <!-- Title and description -->
@@ -44,6 +45,31 @@ const { title, description, keywords='', og_image='' } = Astro.props;
     <meta property="og:type" content="website" />
   </slot>
 
+  <!-- Apply the saved theme before external scripts or first paint. -->
+  <script is:inline>
+    function setDarkMode(document, theme = null) {
+      theme = theme || localStorage.getItem('theme') || 'auto';
+      const isDark = theme === 'dark' || (
+        theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches
+      );
+
+      if (theme === 'auto') {
+        localStorage.removeItem('theme');
+        document.documentElement.classList.toggle('dark', isDark);
+      } else {
+        document.documentElement.classList.toggle('dark', isDark);
+        localStorage.setItem('theme', theme);
+      }
+
+      document.querySelector('meta[name="theme-color"]')
+        ?.setAttribute('content', isDark ? '#121718' : '#fafafa');
+    }
+
+    setDarkMode(document);
+    document.addEventListener('astro:before-swap', e => setDarkMode(e.newDocument));
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => setDarkMode(document));
+  </script>
+
   <!-- Favicon (dark & light mode) -->
   <link rel="icon" href="/favicon.svg" />
 
@@ -53,29 +79,6 @@ const { title, description, keywords='', og_image='' } = Astro.props;
   <!-- Astro View Transitions -->
   <ViewTransitions />
 
-  <!-- Theme Switcher Logics -->
-  <script is:inline>
-    function setDarkMode(document, theme = null) {
-      theme = theme || localStorage.getItem('theme') || 'auto';
-
-      if (theme === 'auto') {
-        localStorage.removeItem('theme');
-        document.documentElement.classList.toggle('dark', window.matchMedia('(prefers-color-scheme: dark)').matches);
-      } else {
-        document.documentElement.classList.toggle('dark', theme === 'dark');
-        localStorage.setItem('theme', theme);
-      }
-    }
-
-    {/* Set theme on load */}
-    setDarkMode(document);
-
-    {/* Fixes FOUC during view transitions */}
-    document.addEventListener('astro:before-swap', e => setDarkMode(e.newDocument));
-
-    {/* Updates theme when system preference changes */}
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => setDarkMode(document));
-  </script>
 </head>
 
 <body class="flex flex-col justify-between min-h-screen relative font-['Barlow'] text-neutral-800 dark:text-neutral-300 bg-gradient-to-br from-neutral-50 to-neutral-100 dark:bg-dark-gradient">
